@@ -33,18 +33,16 @@ class MainTest {
         player.setX(2);
         player.setDx(-2);  // Simular movimiento hacia la izquierda
         player.act();
-        // Verificar que no salga de los límites (debe rebotar o quedarse en posición válida)
         assertEquals(2, player.getX());
     }
 
     @Test
     void playerActLimiteDerecho() {
         Player player = new Player();
-        player.setX(100);
+        player.setX(356);
         player.setDx(2); // Simular movimiento hacia la derecha
         player.act();
-        // Debe quedarse en el borde o ser corregido por la lógica interna
-        assertEquals(100, player.getX());
+        assertEquals(356, player.getX());
     }
 
 
@@ -60,20 +58,45 @@ class MainTest {
     @Test
     void playerActLimiteIzquierdoInvalido() {
         Player player = new Player();
-        player.setX(2);
-        player.setDx(-2);  // Simular movimiento hacia la izquierda
+        player.setX(-2);
+        player.setDx(-5);
         player.act();
-        // Verificar que no salga de los límites (debe rebotar o quedarse en posición válida)
         assertEquals(2, player.getX());
     }
 
     @Test
     void playerActLimiteDerechoInvalido() {
         Player player = new Player();
-        player.setX(100);
-        player.setDx(2); // Simular movimiento hacia la derecha
+        player.setX(500);
+        player.setDx(5);
         player.act();
-        // Debe quedarse en el borde o ser corregido por la lógica interna
-        assertEquals(100, player.getX());
+        assertEquals(356, player.getX());
+    }
+
+    @Test
+    void playerActSinMovimiento() {
+        Player player = new Player();
+        player.setX(2);
+        player.setDx(0);
+        player.act();
+        assertEquals(2, player.getX());
+    }
+
+    @Test
+    void playerActLimiteIzquierdoMovimientoMayor() {
+        Player player = new Player();
+        player.setX(5);
+        player.setDx(-10);
+        player.act();
+        assertEquals(2, player.getX());
+    }
+
+    @Test
+    void playerActLimiteDerechoMovimientoMayor() {
+        Player player = new Player();
+        player.setX(350);
+        player.setDx(20);
+        player.act();
+        assertEquals(356, player.getX());
     }
 }
