@@ -8,7 +8,7 @@ import space_invaders.sprites.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MainTest {
+class PlayerActTest {
 
     @BeforeEach
     void setUp() {
@@ -27,7 +27,7 @@ class MainTest {
         assertTrue(resultado);
     }
 
-    @Test
+    @Test //CP1
     void playerActLimiteIzquierdo() {
         Player player = new Player();
         player.setX(2);
@@ -36,7 +36,7 @@ class MainTest {
         assertEquals(2, player.getX());
     }
 
-    @Test
+    @Test //CP2
     void playerActLimiteDerecho() {
         Player player = new Player();
         player.setX(356);
@@ -46,7 +46,7 @@ class MainTest {
     }
 
 
-    @Test //movimiento normal
+    @Test //CP3
     void playerActPosicionNormal() {
         Player player = new Player();
         player.setX(50);
@@ -55,7 +55,7 @@ class MainTest {
         assertEquals(52, player.getX());
     }
 
-    @Test
+    @Test //CP4
     void playerActLimiteIzquierdoInvalido() {
         Player player = new Player();
         player.setX(-2);
@@ -64,7 +64,7 @@ class MainTest {
         assertEquals(2, player.getX());
     }
 
-    @Test
+    @Test //CP5
     void playerActLimiteDerechoInvalido() {
         Player player = new Player();
         player.setX(500);
@@ -73,7 +73,7 @@ class MainTest {
         assertEquals(356, player.getX());
     }
 
-    @Test
+    @Test //CP6
     void playerActSinMovimiento() {
         Player player = new Player();
         player.setX(2);
@@ -82,7 +82,7 @@ class MainTest {
         assertEquals(2, player.getX());
     }
 
-    @Test
+    @Test //CP7
     void playerActLimiteIzquierdoMovimientoMayor() {
         Player player = new Player();
         player.setX(5);
@@ -91,7 +91,7 @@ class MainTest {
         assertEquals(2, player.getX());
     }
 
-    @Test
+    @Test //CP8
     void playerActLimiteDerechoMovimientoMayor() {
         Player player = new Player();
         player.setX(350);
