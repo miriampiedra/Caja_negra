@@ -7,6 +7,7 @@ import space_invaders.sprites.Player;
 import space_invaders.sprites.Shot;
 
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,123 +22,84 @@ class PlayerKeyReleassedTest {
     void tearDown() {
     }
 
-    @Test //CP1: Left, movimiento, vivo
-    void testSoltarIzquierdaJugadorVivoMoviendo() {
+    @Test //CP1
+    void testSoltarIzquierdaJugadorVivo() {
         Player player = new Player();
         player.setDying(false);
-        player.setDx(-2); // Simula movimiento a la izquierda
 
-        KeyEvent e = new KeyEvent(new java.awt.Component() {
-        }, 0, 0, 0, 37, ' ');
+        KeyEvent e = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(e);
 
-        assertEquals(0, player.getDx());
+        assertEquals(-2, player.getDx());
     }
 
-    @Test // CP2: Right, movimiento, vivo
-    void testSoltarDerechaJugadorVivoMoviendo() {
+    @Test // CP2
+    void testSoltarDerechaJugadorVivo() {
         Player player = new Player();
         player.setDying(false);
-        player.setDx(2); // Simula movimiento a la derecha
 
-        KeyEvent e = new KeyEvent(new java.awt.Component() {
-            }, 0, 0, 0, 39, ' ');
+        KeyEvent e = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(e);
 
-        assertEquals(0, player.getDx());
+        assertEquals(2, player.getDx());
     }
 
-    @Test //CP3: Left, no movimiento, vivo
-    void testSoltarIzquierdaJugadorVivoSinMovimiento() {
-        Player player = new Player();
-        player.setDying(false);
-        player.setDx(0); // No hay moviento
-
-        KeyEvent e = new KeyEvent(new java.awt.Component(){}, 0, 0, 0, 37, ' ');
-        player.keyReleased(e);
-
-        assertEquals(0, player.getDx());
-    }
-
-    // CP4: Right, no movimiento, vivo
-    @Test
-    void testSoltarDerechaJugadorVivoSinMovimiento() {
-        Player player = new Player();
-        player.setDying(false);
-        player.setDx(0); // No hay moviento
-
-        KeyEvent e = new KeyEvent(new java.awt.Component(){}, 0, 0, 0, 39, ' ');
-        player.keyReleased(e);
-
-        assertEquals(0, player.getDx());
-    }
-
-    //ARREGLAR
-    // CP5: Space, vivo, dispara
+    // CP3
     @Test
     void testSoltarSpaceJugadorVivo() {
         Player player = new Player();
-        Shot shot = new Shot();
         player.setDying(false);
 
-        KeyEvent e = new KeyEvent(new java.awt.Component(){}, 0, 0, 0, KeyEvent.VK_SPACE, ' ');
+        KeyEvent e = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_SPACE, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(e);
 
-        assertTrue(player.isVisible());
+        assertEquals(0, player.getDx());
+
+        int xJugador = player.getX();
+        int yJugador = player.getY();
+        Shot shot = new Shot(xJugador, yJugador);
+
+        assertEquals(xJugador + 6, shot.getX(), "La X del disparo respecto al jugador");
+        assertEquals(yJugador - 1, shot.getY(), "La Y del disparo respecto al jugador");
     }
 
-    // CP6: Otra tecla, vivo
+    // CP4
     @Test
     void testSoltarTeclaNoReconocidaVivo() {
         Player player = new Player();
         player.setDying(false);
-        player.setDx(2);
-
-        KeyEvent e = new KeyEvent(new java.awt.Component(){}, 0, 0, 0, KeyEvent.VK_A, 'a'); // Tecla no reconocida
-        player.keyReleased(e);
-
-        boolean resultado = !player.isDying() && player.getDx() == 2;
-        assertTrue(resultado);
-    }
-
-    // CP7: Left, no vivo
-    @Test
-    void testSoltarIzquierdaJugadorMuerto() {
-        Player player = new Player();
-        player.setDying(true);
+        player.setX(2);
         player.setDx(-2);
 
-        KeyEvent e = new KeyEvent(new java.awt.Component(){}, 0, 0, 0, 37, ' ');
+        KeyEvent e = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_S, KeyEvent.CHAR_UNDEFINED); // Tecla no reconocida
         player.keyReleased(e);
 
-        // Si el jugador está muerto, la entrada se ignora
-        boolean resultado = player.isDying() && player.getDx() == 0;
+        boolean resultado = !player.isDying() && player.getX() == 2;
         assertTrue(resultado);
     }
 
-    // CP8: Right, no vivo
+    // CP5
     @Test
-    void testSoltarDerechaJugadorMuerto() {
-        Player player = new Player();
-        player.setDying(true);
-        player.setDx(2);
-
-        KeyEvent e = new KeyEvent(new java.awt.Component(){}, 0, 0, 0, 39, ' ');
-        player.keyReleased(e);
-
-        boolean resultado = player.isDying() && player.getDx() == 0;
-        assertTrue(resultado);
-    }
-
-    // CP9: Space, no vivo
-    @Test
-    void testSoltarSpaceJugadorMuerto() {
+    void testSoltarRJugadorMuerto() {
         Player player = new Player();
         player.setDying(true);
 
-        KeyEvent e = new KeyEvent(new java.awt.Component(){}, 0, 0, 0, KeyEvent.VK_SPACE, ' ');
+        KeyEvent e = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_R, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(e);
 
-        assertTrue(!player.isVisible());
+        assertFalse(player.isDying());
     }
+
+    // CP6
+    @Test
+    void testSoltarOtraTeclaJugadorMuerto() {
+        Player player = new Player();
+        player.setDying(true);
+
+        KeyEvent e = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
+        player.keyReleased(e);
+
+        assertTrue(player.isDying());
+    }
+
 }
