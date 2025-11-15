@@ -25,7 +25,7 @@ class AlienMovementTest {
         int initialX = alien.getX();
         int initialY = alien.getY();
 
-        alien.act(-1); // Mueve izquierda (suma al valor de X).
+        alien.act(-1); // Mueve izquierda (suma al valor de X)
         assertEquals(initialX + 1, alien.getX());
         assertEquals(initialY, alien.getY());
     }
