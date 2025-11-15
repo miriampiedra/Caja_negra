@@ -31,7 +31,7 @@ class PlayerKeyPressedTest {
         assertEquals(-2, player.getDx());
     }
 
-    // CP2: Tecla RIGHT, jugador vivo → dx positivo, mueve derecha
+    // CP2: Tecla RIGHT, jugador vivo → dx positivo, mueve derecha.
     @Test
     void testPulsarDerechaJugadorVivo() {
         Player player = new Player();

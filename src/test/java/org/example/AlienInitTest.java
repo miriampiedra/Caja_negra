@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AlienInitTest {
 
-    // CP1: x=0, y=0 → Alien inicializado correctamente en (0,0)
+    // CP1: x=0, y=0 → Alien inicializado correctamente en (0,0).
     @Test
     void alienInit_CP1() {
         Alien alien = new Alien(0, 0);
