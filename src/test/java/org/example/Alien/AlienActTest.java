@@ -18,14 +18,14 @@ public class AlienActTest {
 
 
     @Test
-    void alienActLimiteIzquierdo() {
+    void alienActLimiteIzquierdo() { //CP1
         Alien alien = new Alien(0,0);
         alien.act(-1);
         assertEquals(0, alien.getX());
         assertEquals(0,alien.getY());
     }
     @Test
-    void alienActCasiLimiteIzquierdo() {
+    void alienActCasiLimiteIzquierdo() { //CP2
         Alien alien = new Alien(1,0);
         alien.act(-2);
         assertEquals(0, alien.getX());
@@ -33,14 +33,14 @@ public class AlienActTest {
     }
 
     @Test //CP2
-    void alienActLimiteDerecho() {
+    void alienActLimiteDerecho() { //CP3
         Alien alien = new Alien(Commons.BOARD_WIDTH,0);
         alien.act(1);
         assertEquals(Commons.BOARD_WIDTH, alien.getX());
         assertEquals(0,alien.getY());
     }
     @Test
-    void alienActCasiLimiteDerecho() {
+    void alienActCasiLimiteDerecho() { //CP4
         Alien alien = new Alien(Commons.BOARD_WIDTH-1,0);
         alien.act(2);
         assertEquals(Commons.BOARD_WIDTH, alien.getX());
@@ -49,7 +49,7 @@ public class AlienActTest {
 
 
     @Test //CP3
-    void alienActPosicionNormal() {
+    void alienActPosicionNormal() { //CP5
         Alien alien = new Alien(20,0);
         alien.act(-5);
         assertEquals(15, alien.getX());

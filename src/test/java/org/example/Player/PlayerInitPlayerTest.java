@@ -18,7 +18,7 @@ public class PlayerInitPlayerTest {
     }
 
     @Test
-    void playerInitEnPosicionCorrecta(){
+    void playerInitEnPosicionCorrecta(){ //CP1
         Player player = new Player();
         assertEquals(Commons.BOARD_WIDTH/2, player.getX());
         assertEquals(Commons.GROUND-10, player.getY());
