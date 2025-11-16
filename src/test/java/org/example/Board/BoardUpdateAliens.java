@@ -1,10 +1,10 @@
-package org.example.Alien;
+package org.example.Board;
 
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Alien;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AlienMovementTest {
+class BoardUpdateAliens {
 
     // CD1: Movimiento normal hacia derecha sin llegar a borde
     @Test
