@@ -1,59 +1,67 @@
 package org.example.Board;
 
-import main.Board;
-import space_invaders.sprites.Alien;
-import space_invaders.sprites.Player;
-import space_invaders.sprites.Shot;
+import main.*;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-
+import java.lang.reflect.Method;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardUpdateTest {
 
-    private static final int PLAYER_MOVEMENT = 2;
-    private static final int ALIEN_WIDTH = 12;
-
-    @Test
-    void testUpdate_PlayerMovement() {
-        Board board = new Board();
-        Player player = board.getPlayer();
-        int initialX = player.getX();
-
-        player.setDx(PLAYER_MOVEMENT);
-
-        board.update();
-
-        assertEquals(initialX + PLAYER_MOVEMENT, player.getX(), "La X del jugador debe aumentar al llamar a update.");
+    private void invokeUpdate(Board board) {
+        try {
+            Method m = Board.class.getDeclaredMethod("update");
+            m.setAccessible(true);
+            m.invoke(board);
+        } catch (Exception e) {
+            fail("No se pudo invocar Board.update() por reflexión: " + e.getMessage());
+        }
     }
 
+    // B1: deaths < 24 → el juego continúa, no debe ponerse "Game won!"
     @Test
-    void testUpdate_AlienMovement() {
+    void testUpdateGameContinuesWhenNotAllAliensDestroyed() {
         Board board = new Board();
-        Alien firstAlien = board.getAliens().get(0);
-        int initialX = firstAlien.getX();
 
-        board.update();
+        board.setDeaths(23);
+        board.setInGame(true);
+        board.setMessage("Game Over");
 
-        assertNotEquals(initialX, firstAlien.getX(), "La X del alien debe cambiar al llamar a update.");
+        invokeUpdate(board);
+
+        assertTrue(board.isInGame(), "El juego debería seguir en marcha");
+        assertNotEquals("Game won!", board.getMessage(),
+                "No debería mostrarse 'Game won!' si aún no han muerto todos los aliens");
     }
 
+    // B2: deaths == 24 → el juego termina y mensaje "Game won!"
     @Test
-    void testUpdate_ShotAlienCollision() {
+    void testUpdateGameEndsExactlyWhenAllAliensDestroyed() {
         Board board = new Board();
-        List<Alien> aliens = board.getAliens();
-        Shot shot = board.getShot();
 
-        Alien alienToHit = aliens.get(0);
-        alienToHit.setX(100);
-        alienToHit.setY(100);
+        board.setDeaths(24);
+        board.setInGame(true);
+        board.setMessage("Game Over");
 
-        shot.setX(100 + ALIEN_WIDTH / 2);
-        shot.setY(100);
-        shot.setVisible(true);
-        board.update();
+        invokeUpdate(board);
 
-        assertTrue(alienToHit.isDying(), "El alien debe estar 'muriendo' (destruido) tras la colisión.");
-        assertFalse(shot.isVisible(), "El disparo debe volverse invisible (destruido) tras la colisión.");
+        assertFalse(board.isInGame(), "El juego debería marcarse como terminado");
+        assertEquals("Game won!", board.getMessage(),
+                "Al destruir todos los aliens debería mostrarse 'Game won!'");
+    }
+
+    // B4: juego ya terminado antes de llamar a update()
+    @Test
+    void testUpdateWhenGameAlreadyFinished() {
+        Board board = new Board();
+
+        board.setDeaths(10);
+        board.setInGame(false);
+        board.setMessage("Game won!");
+
+        invokeUpdate(board);
+
+        assertFalse(board.isInGame(), "El juego debería seguir terminado");
+        assertEquals("Game won!", board.getMessage(),
+                "El mensaje de fin de partida no debería cambiar");
     }
 }
