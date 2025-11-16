@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Board;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +7,7 @@ import space_invaders.sprites.Alien;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UpdateBombTest {
+class BoardUpdateBombTest {
 
     @BeforeEach
     void setUp() {

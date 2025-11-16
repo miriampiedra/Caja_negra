@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Alien;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

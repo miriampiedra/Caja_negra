@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Board;
 
 import main.Board;
 import space_invaders.sprites.Alien;

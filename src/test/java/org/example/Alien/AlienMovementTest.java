@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Alien;
 
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Alien;

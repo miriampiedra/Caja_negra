@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Shot;
 
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Shot;
